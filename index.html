@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pump.fun: jak to celé funguje</title>
+<style>
+:root{--bg:#fbfaf7;--card:#fff;--tx:#1d1d1f;--mut:#66666b;--ac:#1a9e6b;--bd:#e5e3dc;--warn:#fff4e0;--warnb:#e8b24a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#131413;--card:#1d1f1d;--tx:#eeeeea;--mut:#a0a09a;--ac:#3ed598;--bd:#2f322f;--warn:#2e2614;--warnb:#a07a22}}
+:root[data-theme="dark"]{--bg:#131413;--card:#1d1f1d;--tx:#eeeeea;--mut:#a0a09a;--ac:#3ed598;--bd:#2f322f;--warn:#2e2614;--warnb:#a07a22}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 -apple-system,system-ui,"Segoe UI",Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:20px 18px 48px}
+h1{font-size:28px;line-height:1.2;margin:8px 0 6px}
+h2{font-size:21px;margin:34px 0 10px}
+h3{font-size:17px;margin:18px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--mut);font-size:17px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px 16px;margin:12px 0}
+.warn{background:var(--warn);border-color:var(--warnb)}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+nav a{font-size:14px;padding:6px 12px;border:1px solid var(--bd);border-radius:99px;color:var(--tx);text-decoration:none;background:var(--card)}
+.step{display:flex;gap:12px;margin:12px 0}
+.n{flex:0 0 32px;height:32px;border-radius:50%;background:var(--ac);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
+.step p{margin:0}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:480px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--bd)}
+th{color:var(--mut);font-weight:600}
+dt{font-weight:700;margin-top:10px}
+dd{margin:2px 0 0;color:var(--mut)}
+small{color:var(--mut)}
+svg{width:100%;height:auto}
+.b{fill:var(--card);stroke:var(--bd);stroke-width:1.5}
+.t{fill:var(--tx);font-size:12px}
+.m{fill:var(--mut);font-size:10.5px}
+.a{stroke:var(--ac);fill:none;stroke-width:2.5}
+.r{stroke:#d9534f;fill:none;stroke-width:2.5}
+.pt{fill:var(--ac)}
+</style>
+</head>
+<body>
+<main>
+<h1>Pump.fun: jak to celé funguje</h1>
+<p class="lead">Kompletní vysvětlení meme coinů na pump.fun – od vytvoření mince přes bonding curve až po PumpSwap, poplatky a rizika.</p>
+<nav>
+<a href="#co">Co to je</a><a href="#zivot">Životní cyklus</a><a href="#curve">Bonding curve</a><a href="#vstup">Vstup</a><a href="#vystup">Výstup</a><a href="#poplatky">Poplatky</a><a href="#tvurce">Tvůrce</a><a href="#rizika">Rizika</a><a href="#slovnik">Slovník</a>
+</nav>
+
+<h2 id="co">Co je pump.fun</h2>
+<p>Pump.fun je platforma na blockchainu <b>Solana</b>, kde může kdokoli během pár minut vytvořit vlastní token (meme coin) – bez programování a bez počáteční likvidity. Vznikla v lednu 2024 a vytvořily se na ní miliony tokenů. Většina z nich nemá žádnou hodnotu; jde o spekulaci, ne o investici s ověřenou podstatou.</p>
+<div class="card"><b>Hlavní myšlenka:</b> místo klasického páru na burze s vloženou likviditou se nová mince obchoduje proti <b>matematické křivce</b> (bonding curve). Cena je přímo dána tím, kolik SOL se do mince vložilo.</div>
+
+<h2 id="zivot">Životní cyklus mince</h2>
+<div class="step"><div class="n">1</div><p><b>Vytvoření.</b> Tvůrce připojí peněženku (např. Phantom), zadá název, ticker, obrázek, popis a volitelně odkazy na X či Telegram. Vytvoření na platformě stojí 0 SOL (platí se jen drobné síťové poplatky Solany). Tvůrce si může při startu rovnou nakoupit první tokeny.</p></div>
+<div class="step"><div class="n">2</div><p><b>Obchodování na křivce.</b> Mince je okamžitě k mání. Nákup posouvá cenu nahoru, prodej dolů. Nikdo nevkládá likviditu do poolu, takže ji nelze „vytáhnout“ klasickým rug pullem z poolu.</p></div>
+<div class="step"><div class="n">3</div><p><b>Graduace.</b> Když se na křivce vykoupí všech ~800 milionů obchodovatelných tokenů (z celkových 1 miliardy), mince „graduje“. Platí se jednorázový poplatek 0,015 SOL.</p></div>
+<div class="step"><div class="n">4</div><p><b>PumpSwap.</b> Mince se automaticky přesune na vlastní DEX pump.fun – <b>PumpSwap</b> – kde se obchoduje klasickým AMM modelem se sdílenou likviditou. Dříve se migrovalo na Raydium za cca 6 SOL; to už neplatí. Tokeny, které držíte, zůstávají stejné.</p></div>
+<p><small>Většina mincí graduace nikdy nedosáhne – zůstanou na křivce bez obchodů.</small></p>
+<svg viewBox="0 0 320 110" role="img" aria-label="Schéma životního cyklu: vytvoření, bonding curve, graduace, PumpSwap">
+<rect class="b" x="4" y="30" width="68" height="50" rx="8"/><text class="t" x="38" y="52" text-anchor="middle">Vytvoření</text><text class="m" x="38" y="68" text-anchor="middle">0 SOL</text>
+<rect class="b" x="88" y="30" width="68" height="50" rx="8"/><text class="t" x="122" y="52" text-anchor="middle">Křivka</text><text class="m" x="122" y="68" text-anchor="middle">1,25 %</text>
+<rect class="b" x="172" y="30" width="68" height="50" rx="8"/><text class="t" x="206" y="52" text-anchor="middle">Graduace</text><text class="m" x="206" y="68" text-anchor="middle">0,015 SOL</text>
+<rect class="b" x="256" y="30" width="62" height="50" rx="8"/><text class="t" x="287" y="52" text-anchor="middle">PumpSwap</text><text class="m" x="287" y="68" text-anchor="middle">AMM pool</text>
+<path class="a" d="M72 55h14M156 55h14M240 55h14"/>
+</svg>
+
+<h2 id="curve">Bonding curve v kostce</h2>
+<svg viewBox="0 0 320 160" role="img" aria-label="Schéma bonding curve: cena roste s počtem koupených tokenů">
+<line x1="30" y1="130" x2="305" y2="130" stroke="currentColor" opacity=".4"/>
+<line x1="30" y1="130" x2="30" y2="10" stroke="currentColor" opacity=".4"/>
+<path d="M30 125 C120 122 220 100 300 20" fill="none" stroke="#1a9e6b" stroke-width="3"/>
+<text x="305" y="148" font-size="11" text-anchor="end" fill="currentColor">koupené tokeny →</text>
+<text x="34" y="18" font-size="11" fill="currentColor">cena</text>
+<text x="296" y="14" font-size="11" text-anchor="end" fill="currentColor">graduace</text>
+</svg>
+<p>Cena se počítá vzorcem, ne párováním nabídek a poptávek. Kdo kupuje brzy, platí málo; kdo kupuje později, platí víc. Při prodeji dostanete SOL z toho, co se do křivky vložilo – proto cena při hromadném prodeji rychle padá. Přesná výše market capu při graduaci závisí na ceně SOL (historicky se uvádělo kolem 69 tis. USD).</p>
+
+<h2 id="poplatky">Poplatky</h2>
+<p>Podle oficiální stránky pump.fun/docs/fees (stav k listopadu 2026; poplatky se mění, vždy ověřte přímo na webu):</p>
+<div class="card tw"><table>
+<tr><th>Akce</th><th>Celkem</th><th>Tvůrce</th><th>Protokol</th><th>LP</th></tr>
+<tr><td>Vytvoření mince</td><td colspan="4">0 SOL</td></tr>
+<tr><td>Obchod na bonding curve</td><td>1,25 %</td><td>0,30 %</td><td>0,95 %</td><td>0 %</td></tr>
+<tr><td>Graduace na PumpSwap</td><td colspan="4">0,015 SOL jednorázově</td></tr>
+<tr><td>PumpSwap, hlavní (kanonický) pool, do ~420 SOL market capu</td><td>1,25 %</td><td>0,30 %</td><td>0,93 %</td><td>0,02 %</td></tr>
+<tr><td>PumpSwap, kanonický pool, velké mince</td><td>klesá až na 0,30 %</td><td>0,95 % → 0,05 %</td><td>0,05 %</td><td>0,20 %</td></tr>
+<tr><td>PumpSwap, jiné (nekanonické) pooly</td><td>0,30 %</td><td>0 %</td><td>0,05 %</td><td>0,25 %</td></tr>
+</table></div>
+<p><small>Dále existují varianty jako páry s USDC nebo vlastním tokenem a „Holder Rewards“, kde tvůrce nastaví vlastní sazbu místo standardního podílu.</small></p>
+
+<h2 id="tvurce">Jak vydělávají tvůrci</h2>
+<p>Od 13. května 2025 dostává tvůrce mince podíl z poplatků z každého obchodu – na křivce i na PumpSwapu. Poplatky se hromadí a tvůrce si je vybírá přes rozhraní pump.fun. Příklad: při objemu 200 SOL na křivce je podíl tvůrce 200 × 0,30 % = 0,6 SOL. Tvůrce může podíl rozdělit mezi více příjemců (fee sharing).</p>
+<p>Protokol pump.fun má vlastní token <b>PUMP</b>; platforma deklaruje využití části poplatků na zpětné odkupy.</p>
+
+<h2 id="vstup">Vstup: jak mince koupit</h2>
+<svg viewBox="0 0 320 140" role="img" aria-label="Cesta peněz: burza, peněženka, pump.fun a zpět">
+<rect class="b" x="4" y="45" width="86" height="50" rx="8"/><text class="t" x="47" y="74" text-anchor="middle">Burza</text>
+<rect class="b" x="117" y="45" width="86" height="50" rx="8"/><text class="t" x="160" y="74" text-anchor="middle">Peněženka</text>
+<rect class="b" x="230" y="45" width="86" height="50" rx="8"/><text class="t" x="273" y="74" text-anchor="middle">pump.fun</text>
+<path class="a" d="M90 58h27M203 58h27"/><text class="m" x="103" y="38" text-anchor="middle">VSTUP: SOL</text><text class="m" x="216" y="38" text-anchor="middle">nákup</text>
+<path class="r" d="M230 82h-27M117 82H90"/><text class="m" x="103" y="112" text-anchor="middle">VÝSTUP: SOL</text><text class="m" x="216" y="112" text-anchor="middle">prodej</text>
+</svg>
+<div class="step"><div class="n">1</div><p><b>Peněženka.</b> Nainstaluj Phantom nebo Solflare. Seed frázi si zapiš offline a nikdy ji nikomu neukazuj.</p></div>
+<div class="step"><div class="n">2</div><p><b>SOL.</b> Kup SOL na kryptoburze a pošli je na adresu své peněženky, v síti <b>Solana</b>. Nech si stranou malou rezervu na síťové poplatky.</p></div>
+<div class="step"><div class="n">3</div><p><b>Připojení.</b> Otevři pump.fun a připoj peněženku. Ověř si adresu webu, falešných klonů je plno.</p></div>
+<div class="step"><div class="n">4</div><p><b>Nákup.</b> Vyber minci, zadej částku v SOL a zkontroluj <b>slippage</b> (kolik se smí cena mezi klepnutím a provedením změnit). Při rychlém trhu pomáhá vyšší <b>priority fee</b>, transakce se potvrdí dřív.</p></div>
+<h3>Co zkontrolovat před vstupem</h3>
+<ul>
+<li>Kolik procent tokenů drží největší peněženky a tvůrce.</li>
+<li>Co tvůrce vytvořil dřív a jak ty mince dopadly.</li>
+<li>Jestli jsou odkazy a komunita skutečné, nebo jen kopie.</li>
+<li>Objem a počet obchodů, ne jen cenu a graf.</li>
+<li>Jestli se v prvních blocích neobjevil podezřelý hromadný nákup (bundle).</li>
+<li>Adresu mince (contract address): existují kopie se stejným názvem a obrázkem.</li>
+</ul>
+
+<h2 id="vystup">Výstup: jak mince prodat</h2>
+<svg viewBox="0 0 320 150" role="img" aria-label="Typický průběh ceny mince s vyznačeným vstupem a výstupem">
+<line x1="20" y1="125" x2="305" y2="125" stroke="currentColor" opacity=".4"/>
+<path class="a" d="M20 118 L70 108 L110 60 L150 30 L175 22"/>
+<path class="r" d="M175 22 L210 70 L250 100 L300 118"/>
+<circle class="pt" cx="70" cy="108" r="5"/><text class="t" x="70" y="140" text-anchor="middle">brzký vstup</text>
+<circle class="pt" cx="150" cy="30" r="5"/><text class="t" x="128" y="20" text-anchor="middle">výstup</text>
+<circle cx="250" cy="100" r="5" fill="#d9534f"/><text class="t" x="262" y="92" text-anchor="middle">pozdní vstup</text>
+<text class="m" x="300" y="142" text-anchor="end">čas →</text>
+</svg>
+<p><small>Schéma ukazuje častý, ale ne jistý průběh: rychlý růst a pak pád. Nejde o předpověď.</small></p>
+<div class="step"><div class="n">1</div><p><b>Prodej.</b> Na stránce mince zvol Sell a zadej část (například 25 %, 50 %, 100 %) nebo částku. Dostaneš SOL zpět do peněženky.</p></div>
+<div class="step"><div class="n">2</div><p><b>Likvidita.</b> Cena při prodeji závisí na tom, kolik SOL je v křivce nebo poolu. U malých mincí velký prodej cenu výrazně srazí (price impact) a kupců nemusí být dost.</p></div>
+<div class="step"><div class="n">3</div><p><b>Plán předem.</b> Častý přístup je určit si výstup ještě před nákupem: cílový zisk, maximální ztrátu a prodávat po částech, třeba vybrat původní vklad, jakmile se zdvojnásobí. Je to jen způsob uvažování, ne doporučení.</p></div>
+<div class="step"><div class="n">4</div><p><b>Do peněz.</b> SOL pošli na burzu, tam je směň na běžnou měnu a vyber na účet. Po graduaci probíhá prodej na PumpSwapu s poplatky podle tabulky výše.</p></div>
+<div class="card"><b>Příklad poplatků:</b> koupíš za 1 SOL a hned prodáš zpět na křivce. Každý obchod stojí 1,25 %, dohromady zhruba 2,5 %. Mince tedy musí vyrůst alespoň o tolik, abys vyšel na nule, a to ještě bez vlivu slippage a price impactu.</div>
+<p><b>Daně.</b> Zisky z kryptoměn mohou podléhat dani, pravidla se liší podle země. Uchovávej si historii transakcí (exporty z peněženky a burzy).</p>
+
+<h2 id="rizika">Rizika, o kterých se má vědět</h2>
+<div class="card warn">
+<ul>
+<li><b>Většina mincí skončí na nule.</b> Obchodování je vysoce spekulativní a můžete přijít o celou investici.</li>
+<li><b>Insideři a snipeři.</b> Peněženky spojené s tvůrcem nebo boti mohou nakoupit před ostatními (tzv. bundling) a pak prodat do vaší poptávky.</li>
+<li><b>Dump tvůrcem.</b> Pool nejde klasicky „rugnout“, ale kdo drží velkou část tokenů, může cenu srazit prodejem.</li>
+<li><b>Podvody a falešné odkazy.</b> Falešné weby, příslib „zaručených zisků“, žádosti o seed frázi. Seed frázi nikdy nikomu nedávejte.</li>
+<li><b>Poplatky se sčítají.</b> 1,25 % na každý nákup a každý prodej ukusuje zisk.</li>
+<li><b>Právní a daňová stránka</b> se liší podle země; kryptoobchodování může podléhat dani.</li>
+</ul>
+<p><small>Toto není finanční ani právní poradenství.</small></p>
+</div>
+
+<h2 id="slovnik">Slovník</h2>
+<dl>
+<dt>Bonding curve</dt><dd>Vzorec, který určuje cenu tokenu podle množství už koupených tokenů.</dd>
+<dt>Graduace / migrace</dt><dd>Přechod mince z křivky do poolu na PumpSwapu po vykoupení křivky.</dd>
+<dt>PumpSwap</dt><dd>Vlastní decentralizovaná burza (AMM) pump.fun pro graduované mince.</dd>
+<dt>Market cap</dt><dd>Cena tokenu × počet tokenů; hrubý údaj o „velikosti“ mince.</dd>
+<dt>Likvidita (LP)</dt><dd>Prostředky v poolu, proti kterým se obchoduje.</dd>
+<dt>Rug pull</dt><dd>Podvod, kdy tvůrce stáhne hodnotu a nechá ostatní s bezcennými tokeny.</dd>
+<dt>Sniper / bundler</dt><dd>Bot či skupina peněženek nakupující hned při startu mince.</dd>
+<dt>SOL</dt><dd>Nativní měna blockchainu Solana, používaná k nákupům i poplatkům.</dd>
+</dl>
+
+<h2>Zdroje</h2>
+<p>Oficiální poplatky: pump.fun/docs/fees. Technická dokumentace: pump.fun public docs (SDK, PumpSwap). Statistiky protokolu: DeFiLlama.</p>
+</main>
+</body>
+</html>
