@@ -2,23 +2,43 @@
 
 Jednostránkový český průvodce platformou Pump.fun, bonding curve, PumpSwapem, poplatky a riziky obchodování s meme coiny.
 
-## Zobrazení webu
+## O projektu
 
-Po zapnutí GitHub Pages bude stránka dostupná na:
+Tato stránka vysvětluje, jak funguje Pump.fun, jak probíhá obchodování na bonding curve, kdy dochází k graduaci a jaké jsou hlavní rizika spojená s meme coiny a Solana ekosystémem.
 
-<https://stepanhnykzs-lgtm.github.io/frankie-guide/>
+## Web
 
-## Zapnutí GitHub Pages
+Po aktivaci GitHub Pages bude web dostupný na:
 
-V repozitáři otevři **Settings → Pages** a nastav:
+https://stepanhnykzs-lgtm.github.io/frankie-guide/
 
-1. **Build and deployment → Source:** `Deploy from a branch`
-2. **Branch:** `main`
-3. **Folder:** `/(root)`
-4. Klikni na **Save**.
+## Nastavení GitHub Pages
 
-GitHub následně stránku sestaví a zveřejní. Stav nasazení uvidíš v **Actions** nebo v nastavení **Pages**.
+1. Otevři repozitář na GitHub.
+2. Přejdi do sekce `Settings`.
+3. Vyber `Pages`.
+4. Nastav:
+   - Source: `Deploy from a branch`
+   - Branch: `main`
+   - Folder: `/(root)`
+5. Klikni na `Save`.
 
-## Poznámka k obsahu
+Po sestavení bude stránka automaticky publikována. Stav najdeš v sekci `Actions` nebo v `Settings → Pages`.
 
-Informace o poplatcích a fungování platformy se mohou měnit. Před zveřejněním i při aktualizacích ověř aktuální údaje v oficiální dokumentaci Pump.fun a doplň odkazy přímo ke zdrojům. Text je pouze informativní, nejde o finanční ani právní poradenství. Obchodování s kryptoměnami je rizikové a může vést ke ztrátě celé investice.
+## Obsah a upozornění
+
+- Stránka je vytvořena primárně pro vzdělávací účely.
+- Poplatky, parametry a funkce platformy se mohou měnit.
+- Vždy ověř aktuální údaje v oficiální dokumentaci Pump.fun.
+- Tento obsah není finančním ani právním poradenstvím.
+- Kryptoměny jsou rizikové a mohou vést ke ztrátě investice.
+
+## Technologie
+
+- HTML
+- CSS
+- GitHub Pages
+
+## Licence
+
+Tento projekt není vázán na žádnou licenci. Pokud ho budeš používat nebo upravovat, označ původní zdroj a respektuj obsah.
